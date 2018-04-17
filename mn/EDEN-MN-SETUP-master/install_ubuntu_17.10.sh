@@ -2,7 +2,7 @@
 clear
 
 STRING1="Make sure you double check before hitting enter! Only one shot at these!"
-STRING2="If you found this helpful, please donate to EDEN Donation: "
+STRING2="If you found this helpful, please donate to BHash Donation: "
 STRING3="EbShbYatMRezVTWJK9AouFWzczkTz5zvYQ"
 STRING4="Updating system and installing required packages..."
 STRING5="Switching to Aptitude"
@@ -62,19 +62,19 @@ if [[ ("$UFW" == "y" || "$UFW" == "Y" || "$UFW" == "") ]]; then
 fi
 
 #Install Daemon
-sudo cp -v ~/EDEN-MN-SETUP/Eden-v1.0.0.1-ubuntu16/edend /usr/bin/
-sudo cp -v ~/EDEN-MN-SETUP/Eden-v1.0.0.1-ubuntu16/eden-cli /usr/bin/
-chmod +x /usr/bin/edend
-chmod +x /usr/bin/eden-cli
+sudo cp -v ~/EDEN-MN-SETUP/Eden-v1.0.0.1-ubuntu16/bhashd /usr/bin/
+sudo cp -v ~/EDEN-MN-SETUP/Eden-v1.0.0.1-ubuntu16/bhash-cli /usr/bin/
+chmod +x /usr/bin/bhashd
+chmod +x /usr/bin/bhash-cli
 
 #Start Daemon so it will create coin directory (~/.eden)
-edend -daemon
+bhashd -daemon
 
 echo "sleep for 30 seconds..."
 sleep 30
 
 #Stop Daemon
-eden-cli stop
+bhash-cli stop
 
 echo "sleep for 30 seconds..."
 sleep 30
@@ -101,8 +101,8 @@ externalip='$ip'
 bind='$ip':3595
 masternodeprivkey='$key'
 masternode=1
-' | sudo -E tee ~/.eden/eden.conf >/dev/null 2>&1
-sudo chmod 0600 ~/.eden/eden.conf
+' | sudo -E tee ~/.bhash/bhash.conf >/dev/null 2>&1
+sudo chmod 0600 ~/.bhash/bhash.conf
 
 #Starting coin
 (
@@ -111,13 +111,13 @@ sudo chmod 0600 ~/.eden/eden.conf
 ) | crontab
 (
   crontab -l 2>/dev/null
-  echo '@reboot sleep 60 && eden-cli masternode start'
+  echo '@reboot sleep 60 && bhash-cli masternode start'
 ) | crontab
 
 echo "Coin setup complete."
 
 #Start Daemon with newly created conf file (daemon=1)
-edend
+bhashd
 
 echo $STRING2
 echo $STRING13
@@ -139,5 +139,5 @@ echo $STRING14
 sleep 5m
 
 read -p "Press any key to continue... " -n1 -s
-eden-cli masternode start
-eden-cli masternode status
+bhash-cli masternode start
+bhash-cli masternode status
