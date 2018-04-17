@@ -57,7 +57,7 @@ if [[ ("$UFW" == "y" || "$UFW" == "Y" || "$UFW" == "") ]]; then
   sudo ufw default deny incoming
   sudo ufw default allow outgoing
   sudo ufw allow ssh
-  sudo ufw allow 3595/tcp
+  sudo ufw allow 17652/tcp
   sudo ufw enable
 fi
 
@@ -98,7 +98,7 @@ daemon=1
 logtimestamps=1
 maxconnections=32
 externalip='$ip'
-bind='$ip':3595
+bind='$ip':17652
 masternodeprivkey='$key'
 masternode=1
 ' | sudo -E tee ~/.bhash/bhash.conf >/dev/null 2>&1
